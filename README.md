@@ -29,8 +29,25 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## About Assignment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+I have deployed **Assignment 1** to Vercel. You can check it out here: [frontend-assignment-react-next.vercel.app](https://frontend-assignment-react-next.vercel.app/).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Additionally, I have completed **Assignment 2** (Create data from API). You can use Postman to see the responses.
+
+### Available API Endpoints:
+
+- **Users**: [https://frontend-assignment-react-next.vercel.app/api/users](https://frontend-assignment-react-next.vercel.app/api/users)  
+  (This endpoint returns a direct response).
+- **Department**: [https://frontend-assignment-react-next.vercel.app/api/department](https://frontend-assignment-react-next.vercel.app/api/department)  
+  (This is for Assignment 2).
+
+## Running Locally
+
+To run the project locally, please add the following to your `.env` file:
+
+```
+DATA_API_URL=https://dummyjson.com
+```
+
+Alternatively, you can edit the code in the `API` folder to use your preferred data source.
