@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../components/Button";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

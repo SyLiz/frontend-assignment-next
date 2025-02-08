@@ -16,18 +16,37 @@ interface User {
   };
 }
 
-const groupByDepartment = (users: User[]) => {
-  const departmentSummary: Record<string, any> = {};
+interface Department {
+  male: number;
+  female: number;
+  ageRange: {
+    min: number;
+    max: number;
+  };
+  hair: { [color: string]: number };
+  addressUser: { [fullName: string]: string };
+}
+
+interface DepartmentResponse extends Omit<Department, "ageRange"> {
+  ageRange: string;
+}
+
+const groupByDepartment = (
+  users: User[]
+): Record<string, DepartmentResponse> => {
+  const departmentSummary: Record<string, Department> = {};
 
   users.forEach((user) => {
     const department = user.company.department;
 
-    // Initialize department group if not already
     if (!departmentSummary[department]) {
       departmentSummary[department] = {
         male: 0,
         female: 0,
-        ageRange: { min: Infinity, max: -Infinity },
+        ageRange: {
+          min: user.age,
+          max: user.age,
+        },
         hair: {},
         addressUser: {},
       };
@@ -43,29 +62,24 @@ const groupByDepartment = (users: User[]) => {
     dept.ageRange.min = Math.min(dept.ageRange.min, user.age);
     dept.ageRange.max = Math.max(dept.ageRange.max, user.age);
 
-    // Hair Color Count (dynamically add new colors if they don't exist)
+    // Hair Color Count
     const hairColor = user.hair.color;
-    if (!dept.hair[hairColor]) {
-      dept.hair[hairColor] = 0;
-    }
-    dept.hair[hairColor]++;
+    dept.hair[hairColor] = (dept.hair[hairColor] || 0) + 1;
 
     // Address User Summary
     dept.addressUser[`${user.firstName}${user.lastName}`] =
       user.address.postalCode;
   });
 
-  // Format age range as a string (e.g., "20-30")
-  for (const department in departmentSummary) {
-    const dept = departmentSummary[department];
-    if (dept.ageRange.min === Infinity && dept.ageRange.max === -Infinity) {
-      dept.ageRange = "N/A"; // In case no age data was available
-    } else {
-      dept.ageRange = `${dept.ageRange.min}-${dept.ageRange.max}`;
-    }
-  }
-
-  return departmentSummary;
+  return Object.fromEntries(
+    Object.entries(departmentSummary).map(([dept, data]) => [
+      dept,
+      {
+        ...data,
+        ageRange: `${data.ageRange.min}-${data.ageRange.max}`,
+      },
+    ])
+  );
 };
 
 export async function GET() {
